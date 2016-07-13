@@ -25,6 +25,22 @@ class PostController {
         fetchPosts()
     }
     
+    func addPost(username: String, text: String) {
+        let post = Post(username: username, text: text)
+        guard let requestURL = post.endpoint else { return }
+        NetworkController.performRequestForURL(requestURL, httpMethod: .Put, body: post.jsonData) { (data, error) in
+            let responseDataString = NSString(data: data!, encoding: NSUTF8StringEncoding) ?? ""
+            if error != nil {
+                print("Error: \(error?.localizedDescription)")
+            } else if responseDataString.containsString("error") {
+                print("Error: \(responseDataString)")
+            } else {
+                print("Success! \n\(responseDataString)")
+            }
+        }
+        fetchPosts()
+    }
+    
     func fetchPosts(completion: ((newPosts: [Post]) -> Void)? = nil) {
         guard let url = PostController.jsonEndpoint else {
             fatalError("Post Endpoint url failed")
