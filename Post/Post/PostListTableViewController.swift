@@ -22,6 +22,16 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
         self.refreshControl?.addTarget(self, action: #selector(PostListTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row + 1 >= postController.posts.count {
+            postController.fetchPosts(false, completion: { (posts) in
+                if posts != nil {
+                    self.tableView.reloadData()
+                }
+            })
+        }
+    }
+    
     // MARK: - Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,16 +51,16 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
     }
     
     func postsUpdated(posts: [Post]) {
-        postController.fetchPosts()
         tableView.reloadData()
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        refreshControl.beginRefreshing()
-        self.tableView.reloadData()
-        refreshControl.endRefreshing()
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        postController.fetchPosts(completion: { (posts) in
+            self.tableView.reloadData()
+            refreshControl.endRefreshing()
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
     }
     
     // MARK: - Helper Functions
