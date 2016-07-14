@@ -50,10 +50,6 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
         return cell
     }
     
-    func postsUpdated(posts: [Post]) {
-        tableView.reloadData()
-    }
-    
     func handleRefresh(refreshControl: UIRefreshControl) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         postController.fetchPosts(completion: { (posts) in
@@ -61,6 +57,12 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
             refreshControl.endRefreshing()
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         })
+    }
+    
+    // MARK: - PostControllerDelegate Function 
+    
+    func postsUpdated(posts: [Post]) {
+        tableView.reloadData()
     }
     
     // MARK: - Helper Functions

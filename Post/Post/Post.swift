@@ -18,6 +18,9 @@ class Post {
     let text: String
     var timeStamp: NSTimeInterval
     var identifier: NSUUID
+    var queryTimestamp: NSTimeInterval {
+        return self.timeStamp - 0.000001
+    }
     
     var endpoint: NSURL? {
         return PostController.baseURL?.URLByAppendingPathComponent(self.identifier.UUIDString).URLByAppendingPathExtension("json")
