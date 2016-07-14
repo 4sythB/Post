@@ -11,7 +11,7 @@ import Foundation
 class PostController {
     
     static let baseURL = NSURL(string: "https://devmtn-post.firebaseio.com/posts")
-    static let jsonEndpoint = baseURL?.URLByAppendingPathExtension("json")
+    static let endpoint = baseURL?.URLByAppendingPathExtension("json")
     
     var posts: [Post] = [] {
         didSet {
@@ -28,6 +28,7 @@ class PostController {
     func addPost(username: String, text: String) {
         let post = Post(username: username, text: text)
         guard let requestURL = post.endpoint else { return }
+        
         NetworkController.performRequestForURL(requestURL, httpMethod: .Put, body: post.jsonData) { (data, error) in
             let responseDataString = NSString(data: data!, encoding: NSUTF8StringEncoding) ?? ""
             if error != nil {
@@ -42,7 +43,7 @@ class PostController {
     }
     
     func fetchPosts(completion: ((newPosts: [Post]) -> Void)? = nil) {
-        guard let url = PostController.jsonEndpoint else {
+        guard let url = PostController.endpoint else {
             fatalError("Post Endpoint url failed")
         }
         NetworkController.performRequestForURL(url, httpMethod: .Get) { (data, error) in

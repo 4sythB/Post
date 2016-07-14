@@ -10,10 +10,9 @@ import Foundation
 
 class Post {
     
-    let usernameKey: String = "usernameKey"
-    let textKey: String = "textKey"
-    let timeStampKey: String = "timeStampKey"
-    let identifierKey: String = "identifierKey"
+    let usernameKey: String = "username"
+    let textKey: String = "text"
+    let timeStampKey: String = "timestamp"
     
     let username: String
     let text: String
@@ -21,12 +20,11 @@ class Post {
     var identifier: NSUUID
     
     var endpoint: NSURL? {
-        let url = PostController.baseURL?.URLByAppendingPathComponent("\(identifier).json")
-        return url
+        return PostController.baseURL?.URLByAppendingPathComponent(self.identifier.UUIDString).URLByAppendingPathExtension("json")
     }
     
     var jsonValue: [String : AnyObject] {
-        return [usernameKey : username, textKey : text, timeStampKey : timeStamp, identifierKey : identifier]
+        return [usernameKey : username, textKey : text, timeStampKey : timeStamp]
     }
     
     var jsonData: NSData? {
@@ -51,7 +49,6 @@ class Post {
         self.username = username
         self.text = text
         self.timeStamp = timeStamp
-        guard let identifier = NSUUID(UUIDString: identifier) else { return nil }
-        self.identifier = identifier
+        self.identifier = NSUUID(UUIDString: identifier) ?? NSUUID()
     }
 }
