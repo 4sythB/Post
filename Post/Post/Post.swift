@@ -10,9 +10,9 @@ import Foundation
 
 class Post {
     
-    let usernameKey: String = "username"
-    let textKey: String = "text"
-    let timeStampKey: String = "timestamp"
+    private let usernameKey: String = "username"
+    private let textKey: String = "text"
+    private let timeStampKey: String = "timestamp"
     
     let username: String
     let text: String
