@@ -19,7 +19,7 @@ class Post {
     var timeStamp: NSTimeInterval
     var identifier: NSUUID
     var queryTimestamp: NSTimeInterval {
-        return self.timeStamp - 0.000001
+        return self.timeStamp - 0.00001
     }
     
     var endpoint: NSURL? {

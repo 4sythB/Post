@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Post List Table View Controller-->
+        <!--Post-->
         <scene sceneID="r7s-wt-ky2">
             <objects>
                 <tableViewController id="wqc-0B-9fx" customClass="PostListTableViewController" customModule="Post" customModuleProvider="target" sceneMemberID="viewController">
@@ -44,7 +44,7 @@
                             <outlet property="delegate" destination="wqc-0B-9fx" id="cZj-0B-6BH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="hUl-DW-m25">
+                    <navigationItem key="navigationItem" title="Post" id="hUl-DW-m25">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ogT-KE-1fR">
                             <connections>
                                 <action selector="addButtonTapped:" destination="wqc-0B-9fx" id="SDG-kq-Vk9"/>
